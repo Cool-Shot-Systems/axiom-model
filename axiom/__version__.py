@@ -1,4 +1,5 @@
 """Version information for AXIOM."""
 
-AXIOM v1.0.0
+__version__ = "0.1.0"
+
 
