@@ -1,0 +1,7 @@
+blocked_topics:
+  - "malware"
+  - "weapon construction"
+  - "hate"
+  - "self-harm"
+  - "illegal activities"
+required_identity_response: true
