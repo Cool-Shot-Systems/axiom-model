@@ -1,5 +1,7 @@
 # AXIOM
 
+**TL;DR:** AXIOM is a production-grade, text-only AI model built and operated by **Cool Shot Systems**. It provides a clean, installable library with identity-first safeguards, training pipelines, and evaluation tooling for real-world deployments.
+
 AXIOM is a proprietary, text-only AI model developed and operated by **Cool Shot Systems**. It is built for production-ready language workflows with strict identity alignment, auditable configuration, and a clean separation between core runtime, training pipelines, and evaluation suites.
 
 **Status:** Pre-Launch / Research & Development  
@@ -29,12 +31,12 @@ AXIOM must always identify as **AXIOM** and state it was created by **Cool Shot 
 pip install -e .
 ```
 
-### Run inference
+### Run inference (canonical)
 ```
 python scripts/axiom_infer.py --model-path /path/to/base/model --prompt "Hello, AXIOM"
 ```
 
-### Run evaluation
+### Evaluate identity
 ```
 python scripts/axiom_eval.py --suite identity
 ```
@@ -90,11 +92,15 @@ python scripts/axiom_eval.py --suite identity
 ```
 
 ## Training
-- Full fine-tuning: `python scripts/axiom_train.py --mode full --model-path /path/to/base --dataset data/axiom-identity-v1.jsonl --output output/full`
-- LoRA fine-tuning: `python scripts/axiom_train.py --mode lora --model-path /path/to/base --dataset data/axiom-identity-v1.jsonl --output output/lora`
+Training workflows (full fine-tune and LoRA) are documented in [docs/training.md](docs/training.md).
 
 ## Evaluation
 Identity, reasoning, and safety suites are provided to detect drift and policy violations. See `scripts/axiom_eval.py`.
+
+## Roadmap
+- Expand evaluation suites with richer identity stress tests.
+- Add deployment recipes for production environments.
+- Extend dataset versions with new alignment scenarios.
 
 ## License
 See [LICENSE](LICENSE).

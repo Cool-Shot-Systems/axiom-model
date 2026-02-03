@@ -6,6 +6,7 @@ from pathlib import Path
 
 import yaml
 
+from axiom.__version__ import __version__
 from axiom.modeling.inference import AxiomInference, GenerationConfig
 from axiom.modeling.loader import BaseModelConfig, BaseModelLoader
 from axiom.prompts.generator import build_system_prompt
@@ -19,6 +20,7 @@ def load_yaml(path: Path) -> dict:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Run AXIOM inference")
+    parser.add_argument("--version", action="version", version=f"AXIOM {__version__}")
     parser.add_argument("--model-path", type=Path, required=True)
     parser.add_argument("--prompt", type=str, required=True)
     parser.add_argument("--device", type=str, default="cpu")

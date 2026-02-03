@@ -4,12 +4,14 @@
 import argparse
 from pathlib import Path
 
+from axiom.__version__ import __version__
 from axiom.training.finetune import FineTuneConfig, run_full_finetune
 from axiom.training.lora import LoRAConfig, run_lora_finetune
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Train AXIOM")
+    parser.add_argument("--version", action="version", version=f"AXIOM {__version__}")
     parser.add_argument("--mode", choices=["lora", "full"], default="lora")
     parser.add_argument("--model-path", type=Path, required=True)
     parser.add_argument("--dataset", type=Path, required=True)

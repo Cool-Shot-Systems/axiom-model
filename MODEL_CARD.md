@@ -9,6 +9,9 @@
 
 AXIOM is a proprietary AI model developed and operated by Cool Shot Systems. It is engineered to provide reliable text generation and understanding with strict identity alignment.
 
+## Model Architecture
+AXIOM uses a decoder-only, causal language modeling architecture adapted for text-only generation. It is designed to be loaded from open-weight base models and fine-tuned into AXIOM with identity constraints and policy enforcement.
+
 ## Intended Use
 AXIOM is designed for:
 - Internal productivity tooling
@@ -42,10 +45,16 @@ Evaluation covers:
 - **Reasoning:** baseline response quality on simple prompts
 - **Safety:** blocked-topic and refusal adherence
 
-## Limitations
+## Evaluation Summary
+The evaluation suite focuses on maintaining identity compliance and safety policy adherence while tracking baseline response quality. Evaluation results are logged via the CLI tooling and can be extended with additional tests.
+
+## Known Limitations
 - Text-only; no image or audio handling
 - Output quality depends on data quality and fine-tuning coverage
 - Not a substitute for professional advice in regulated domains
+
+## Governance & Identity Guarantees
+AXIOM always identifies as AXIOM and attributes its creation to Cool Shot Systems. Identity guarantees are enforced by configuration, system prompts, and runtime validators, and are mandatory for any deployment.
 
 ## Ethical Considerations
 AXIOM is built with explicit identity enforcement and safety constraints to mitigate impersonation and misuse. Deployments should include human oversight, monitoring, and periodic evaluation.

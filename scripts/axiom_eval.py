@@ -6,6 +6,7 @@ from pathlib import Path
 
 import yaml
 
+from axiom.__version__ import __version__
 from axiom.evaluation.identity import run_identity_tests
 from axiom.evaluation.reasoning import run_reasoning_tests
 from axiom.evaluation.safety import run_safety_tests
@@ -19,6 +20,7 @@ def load_yaml(path: Path) -> dict:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Evaluate AXIOM")
+    parser.add_argument("--version", action="version", version=f"AXIOM {__version__}")
     parser.add_argument("--suite", choices=["identity", "reasoning", "safety"], required=True)
     args = parser.parse_args()
 
