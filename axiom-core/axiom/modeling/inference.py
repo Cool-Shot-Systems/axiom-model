@@ -3,7 +3,7 @@
 from dataclasses import dataclass
 from typing import Any, Dict, Optional
 
-from axiom.model.tokenizer import TokenizerAdapter
+from axiom.modeling.tokenizer import TokenizerAdapter
 from axiom.utils.validators import IdentityValidator, SafetyValidator
 
 

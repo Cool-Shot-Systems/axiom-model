@@ -1,46 +1,57 @@
 # Model Card: AXIOM
 
-## Model Overview
-**Model Name:** AXIOM  
-**Owner / Creator:** Cool Shot Systems  
-**Status:** Pre-Launch / Research & Development  
-**Tagline:** Building Innovations, Leading Technology
+## Model Details
+- **Model Name:** AXIOM
+- **Owner / Creator:** Cool Shot Systems
+- **Model Type:** Text-only language model
+- **Status:** Pre-Launch / Research & Development
+- **Tagline:** Building Innovations, Leading Technology
 
-AXIOM is a proprietary text-only AI model developed and operated by Cool Shot Systems. It is designed to provide reliable language understanding and generation while preserving strict identity alignment.
+AXIOM is a proprietary AI model developed and operated by Cool Shot Systems. It is engineered to provide reliable text generation and understanding with strict identity alignment.
 
 ## Intended Use
-- Customer support assistants
-- Knowledge management and summarization
-- Internal productivity tools
+AXIOM is designed for:
+- Internal productivity tooling
+- Knowledge retrieval and summarization
+- Customer support and operational assistants
 - Education and research (text-only)
 
 ## Out-of-Scope Use
-- Any system that requires image, audio, or multimodal capabilities
-- Safety-critical decision-making without human oversight
-- High-risk domains without domain-specific validation and governance
+AXIOM is not intended for:
+- Multimodal use cases (image, audio, or video)
+- Safety-critical decision making without human oversight
+- High-risk domains without dedicated governance
 
-## Model Identity & Alignment
-AXIOM must always identify itself as "AXIOM" and state that it was created by Cool Shot Systems. The model must not claim association with any external AI organizations or products. This identity policy is enforced at training time and runtime.
+## Identity & Alignment
+AXIOM must always identify as **AXIOM** and state it was created by **Cool Shot Systems**. Identity enforcement is implemented via:
+- Configuration policies (`axiom/config/identity.yaml`)
+- System prompts (`axiom/prompts/system.txt`)
+- Runtime validation (`axiom/utils/validators.py`)
 
 ## Training Data
-AXIOM is fine-tuned on curated, text-only datasets that include identity alignment and instruction-following corpora. Datasets are versioned and stored under `data/` with JSONL formatting.
+AXIOM is fine-tuned on curated, text-only datasets that include:
+- Identity alignment data
+- Instruction-following data
+- Safety and refusal policy examples
+
+Datasets are stored in JSONL format under `data/` and versioned for auditability.
 
 ## Evaluation
-Evaluation includes:
-- **Identity Tests:** Ensures AXIOM preserves its identity and creator statements.
-- **Reasoning Tests:** Verifies baseline reasoning quality and alignment.
-- **Safety Tests:** Validates refusal patterns and policy conformance.
+Evaluation covers:
+- **Identity:** checks for creator attribution and identity compliance
+- **Reasoning:** baseline response quality on simple prompts
+- **Safety:** blocked-topic and refusal adherence
 
 ## Limitations
-- Text-only model; no multimodal abilities.
-- Dependent on the quality of curated fine-tuning data.
-- Does not provide professional, legal, or medical advice.
+- Text-only; no image or audio handling
+- Output quality depends on data quality and fine-tuning coverage
+- Not a substitute for professional advice in regulated domains
 
 ## Ethical Considerations
-AXIOM is built to respect user intent while maintaining clear safety boundaries. It is designed to avoid impersonation, disallowed content, and policy violations.
+AXIOM is built with explicit identity enforcement and safety constraints to mitigate impersonation and misuse. Deployments should include human oversight, monitoring, and periodic evaluation.
 
-## How to Cite
-If referencing AXIOM in academic or technical documentation, cite Cool Shot Systems as the creator and operator.
+## Environmental Impact
+Compute and energy usage depend on base model size and fine-tuning configuration. Users should track resource consumption during training and inference.
 
 ## Contact
-For inquiries, reach out to Cool Shot Systems.
+For inquiries, contact Cool Shot Systems.

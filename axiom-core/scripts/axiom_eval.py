@@ -6,9 +6,9 @@ from pathlib import Path
 
 import yaml
 
-from axiom.evaluation.identity_tests import run_identity_tests
-from axiom.evaluation.reasoning_tests import run_reasoning_tests
-from axiom.evaluation.safety_tests import run_safety_tests
+from axiom.evaluation.identity import run_identity_tests
+from axiom.evaluation.reasoning import run_reasoning_tests
+from axiom.evaluation.safety import run_safety_tests
 from axiom.utils.validators import IdentityValidator, SafetyValidator
 
 

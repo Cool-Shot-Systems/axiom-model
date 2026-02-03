@@ -4,8 +4,8 @@ from pathlib import Path
 
 import yaml
 
-from axiom.model.inference import AxiomInference, GenerationConfig
-from axiom.model.loader import BaseModelConfig, BaseModelLoader
+from axiom.modeling.inference import AxiomInference, GenerationConfig
+from axiom.modeling.loader import BaseModelConfig, BaseModelLoader
 from axiom.prompts.generator import build_system_prompt
 from axiom.utils.validators import IdentityValidator, SafetyValidator
 

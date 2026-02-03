@@ -17,7 +17,13 @@ python -m axiom.training.finetune --help
 ## LoRA Fine-Tune
 Run:
 ```
-python scripts/train_lora.py --model-path /path/to/base --dataset data/axiom-identity-v1.jsonl --output output/lora
+python scripts/axiom_train.py --mode lora --model-path /path/to/base --dataset data/axiom-identity-v1.jsonl --output output/lora
+```
+
+## Full Fine-Tune (All Weights)
+Run:
+```
+python scripts/axiom_train.py --mode full --model-path /path/to/base --dataset data/axiom-identity-v1.jsonl --output output/full
 ```
 
 ## Best Practices

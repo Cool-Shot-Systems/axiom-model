@@ -1,34 +1,60 @@
 # AXIOM
 
-AXIOM is a proprietary text-only AI model developed and operated by **Cool Shot Systems**. It is designed to be a production-ready language model with strong identity alignment, transparent governance, and a clear separation between the base model, the fine-tuned AXIOM model, and runtime components.
+AXIOM is a proprietary, text-only AI model developed and operated by **Cool Shot Systems**. It is built for production-ready language workflows with strict identity alignment, auditable configuration, and a clean separation between core runtime, training pipelines, and evaluation suites.
 
 **Status:** Pre-Launch / Research & Development  
 **Owner:** Cool Shot Systems  
 **Tagline:** Building Innovations, Leading Technology
 
-## Overview
-AXIOM is a text-only model built to power practical, user-facing language features. This repository provides:
+## Model Summary
+AXIOM is designed for practical, real-world text applications such as knowledge assistants, productivity tools, and internal automation. The repository is structured for engineers who want a clean, installable library with training, evaluation, and deployment guidance.
 
-- A complete model package layout with clean runtime abstractions.
-- Identity enforcement and safety policy checks.
-- Fine-tuning workflows (full and LoRA).
-- Evaluation suites that detect identity drift.
-- Example datasets and prompt configurations.
+## Intended Use
+- Enterprise and internal assistants
+- Knowledge search and summarization
+- Customer support and operational workflows
+- Education and research (text-only)
 
-## Repository Structure
+## Out-of-Scope Use
+- Multimodal tasks (image, audio, or video)
+- Safety-critical decision making without human oversight
+- High-risk domains without domain-specific validation
+
+## Identity & Governance
+AXIOM must always identify as **AXIOM** and state it was created by **Cool Shot Systems**. Identity enforcement is implemented in configuration, system prompts, and runtime validators.
+
+## Quickstart
+### Install (local development)
+```
+pip install -e .
+```
+
+### Run inference
+```
+python scripts/axiom_infer.py --model-path /path/to/base/model --prompt "Hello, AXIOM"
+```
+
+### Run evaluation
+```
+python scripts/axiom_eval.py --suite identity
+```
+
+## Repository Layout
 ```
 axiom-core/
 ├── README.md
 ├── MODEL_CARD.md
 ├── LICENSE
 ├── CHANGELOG.md
+├── pyproject.toml
 ├── axiom/
 │   ├── __init__.py
+│   ├── __version__.py
 │   ├── config/
 │   │   ├── identity.yaml
 │   │   ├── generation.yaml
 │   │   └── safety.yaml
-│   ├── model/
+│   ├── modeling/
 │   │   ├── loader.py
 │   │   ├── inference.py
 │   │   └── tokenizer.py
@@ -37,56 +63,38 @@ axiom-core/
 │   │   ├── lora.py
 │   │   └── datasets.py
 │   ├── evaluation/
-│   │   ├── identity_tests.py
-│   │   ├── reasoning_tests.py
-│   │   └── safety_tests.py
+│   │   ├── identity.py
+│   │   ├── reasoning.py
+│   │   └── safety.py
 │   ├── prompts/
-│   │   └── system_prompt.txt
+│   │   └── system.txt
 │   └── utils/
 │       ├── logging.py
 │       └── validators.py
 ├── data/
 │   ├── axiom-identity-v1.jsonl
 │   ├── axiom-instruction-v1.jsonl
-│   └── eval_sets/
+│   └── eval/
 ├── scripts/
-│   ├── run_inference.py
-│   ├── train_lora.py
-│   └── evaluate.py
-├── examples/
-│   ├── basic_chat.py
-│   └── identity_check.py
-└── docs/
-    ├── architecture.md
-    ├── training.md
-    └── deployment.md
+│   ├── axiom_infer.py
+│   ├── axiom_train.py
+│   └── axiom_eval.py
+├── docs/
+│   ├── index.md
+│   ├── architecture.md
+│   ├── training.md
+│   └── deployment.md
+└── examples/
+    ├── basic_chat.py
+    └── identity_check.py
 ```
 
-## Quickstart
-### 1) Install dependencies
-AXIOM is designed to be compatible with local or dedicated GPU environments. Install the packages you need for your local training and inference stack.
+## Training
+- Full fine-tuning: `python scripts/axiom_train.py --mode full --model-path /path/to/base --dataset data/axiom-identity-v1.jsonl --output output/full`
+- LoRA fine-tuning: `python scripts/axiom_train.py --mode lora --model-path /path/to/base --dataset data/axiom-identity-v1.jsonl --output output/lora`
 
-### 2) Configure identity
-Update `axiom/config/identity.yaml` to reflect your deployment requirements. Identity configuration is treated as a hard constraint.
-
-### 3) Run inference
-```
-python scripts/run_inference.py --prompt "Hello, AXIOM"
-```
-
-### 4) Run evaluation
-```
-python scripts/evaluate.py --suite identity
-```
-
-## Design Principles
-- **Identity first:** AXIOM must always identify as AXIOM and state it was created by Cool Shot Systems.
-- **Modular training:** Full fine-tune and LoRA pipelines are both supported.
-- **Auditable:** Clear logs, deterministic config, and explicit validators.
-- **Text-only:** No image, audio, or multimodal features.
-
-## Responsible Use
-AXIOM is developed for legitimate, user-facing language applications. You are responsible for compliance with your local laws, policies, and safety guidelines.
+## Evaluation
+Identity, reasoning, and safety suites are provided to detect drift and policy violations. See `scripts/axiom_eval.py`.
 
 ## License
-See [LICENSE](LICENSE) for usage details.
+See [LICENSE](LICENSE).

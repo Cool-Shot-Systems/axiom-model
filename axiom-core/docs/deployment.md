@@ -7,7 +7,7 @@
 ## Runtime Checklist
 - Ensure identity and safety configs are present.
 - Store model artifacts on fast local storage.
-- Use the `scripts/run_inference.py` entrypoint for standard deployments.
+- Use the `scripts/axiom_infer.py` entrypoint for standard deployments.
 
 ## Observability
 Enable structured logging and monitor:
