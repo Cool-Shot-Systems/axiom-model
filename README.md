@@ -41,7 +41,7 @@ python scripts/axiom_eval.py --suite identity
 
 ## Repository Layout
 ```
-axiom-core/
+./
 ├── README.md
 ├── MODEL_CARD.md
 ├── LICENSE
