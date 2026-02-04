@@ -24,11 +24,26 @@ def run_lora_finetune(config: LoRAConfig) -> None:
     from transformers import AutoModelForCausalLM, AutoTokenizer, Trainer, TrainingArguments
     from peft import LoraConfig, get_peft_model
 
-   tokenizer = AutoTokenizer.from_pretrained(config.model_path)
-tokenizer.pad_token = tokenizer.eos_token
-tokenizer.pad_token_
+    # LOAD TOKENIZER (LOCAL ONLY)
+    tokenizer = AutoTokenizer.from_pretrained(
+        config.model_path,
+        local_files_only=True
+    )
 
+    # FIX GPT-2 PADDING
+    if tokenizer.pad_token is None:
+        tokenizer.pad_token = tokenizer.eos_token
 
+    # LOAD MODEL (LOCAL ONLY)
+    model = AutoModelForCausalLM.from_pretrained(
+        config.model_path,
+        local_files_only=True
+    )
+
+    if model.config.pad_token_id is None:
+        model.config.pad_token_id = tokenizer.pad_token_id
+
+    # LoRA CONFIG
     lora_config = LoraConfig(
         r=config.r,
         lora_alpha=config.alpha,
@@ -36,11 +51,19 @@ tokenizer.pad_token_
         bias="none",
         task_type="CAUSAL_LM",
     )
+
     model = get_peft_model(model, lora_config)
 
+    # LOAD DATA
     examples = load_jsonl(config.dataset_path)
     training_text: List[str] = list(iter_training_text(examples))
-    tokenized = tokenizer(training_text, return_tensors="pt", padding=True, truncation=True)
+
+    tokenized = tokenizer(
+        training_text,
+        return_tensors="pt",
+        padding=True,
+        truncation=True,
+    )
 
     training_args = TrainingArguments(
         output_dir=str(config.output_path),
@@ -51,6 +74,11 @@ tokenizer.pad_token_
         save_steps=50,
     )
 
-    trainer = Trainer(model=model, args=training_args, train_dataset=TextDataset(tokenized))
+    trainer = Trainer(
+        model=model,
+        args=training_args,
+        train_dataset=TextDataset(tokenized),
+    )
+
     trainer.train()
     model.save_pretrained(str(config.output_path))
