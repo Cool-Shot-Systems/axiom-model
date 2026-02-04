@@ -31,6 +31,52 @@ AXIOM must always identify as **AXIOM** and state it was created by **Cool Shot 
 pip install -e .
 ```
 
+## Frontend (Next.js)
+### Deploy on Vercel
+1. Create a new Vercel project connected to this repository.
+2. Set the required environment variables in the Vercel dashboard.
+3. Deploy the project.
+
+### Required environment variables
+```
+NEXT_PUBLIC_AXIOM_API_URL=https://axiom-api.onrender.com/v1/generate
+NEXT_PUBLIC_AXIOM_API_KEY=dev-key-axiom
+```
+
+### How the frontend connects to the AXIOM API
+The web UI sends POST requests to the AXIOM FastAPI backend using the configured
+environment variables for the endpoint URL and API key. The UI relays user
+messages to `/v1/generate` and displays AXIOM responses.
+
+### Security note
+The API URL and API key are exposed to the browser because they are defined as
+`NEXT_PUBLIC_*` variables. Configure these values in the Vercel project settings
+and scope the API key for frontend use only.
+
+## API (v1)
+### Start the API
+```
+uvicorn axiom.api.main:app --host 0.0.0.0 --port 8000
+```
+
+### Running the AXIOM API Locally
+```
+uvicorn axiom.api.main:app --reload
+```
+
+### Generate text
+```
+curl -X POST http://localhost:8000/v1/generate \
+  -H "Authorization: Bearer dev-key-axiom" \
+  -H "Content-Type: application/json" \
+  -d '{"prompt": "Who created you?", "max_tokens": 150}'
+```
+
+### Developer integrations (including Telegram bots)
+Use the `/v1/generate` endpoint as the canonical interface for bots and applications.
+When integrating a Telegram bot, forward incoming user messages to `/v1/generate`,
+then relay the `response` field back to the chat.
+
 ### Run inference (canonical)
 ```
 python scripts/axiom_infer.py --model-path /path/to/base/model --prompt "Hello, AXIOM"
