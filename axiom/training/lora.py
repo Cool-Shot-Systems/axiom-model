@@ -24,12 +24,10 @@ def run_lora_finetune(config: LoRAConfig) -> None:
     from transformers import AutoModelForCausalLM, AutoTokenizer, Trainer, TrainingArguments
     from peft import LoraConfig, get_peft_model
 
-    tokenizer = AutoTokenizer.from_pretrained(config.model_path)
-    model = AutoModelForCausalLM.from_pretrained(config.model_path)
-    if tokenizer.pad_token is None:
-        tokenizer.pad_token = tokenizer.eos_token
-    if model.config.pad_token_id is None:
-        model.config.pad_token_id = tokenizer.pad_token_id
+   tokenizer = AutoTokenizer.from_pretrained(config.model_path)
+tokenizer.pad_token = tokenizer.eos_token
+tokenizer.pad_token_
+
 
     lora_config = LoraConfig(
         r=config.r,
