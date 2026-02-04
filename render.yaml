@@ -17,5 +17,3 @@ services:
         value: production
       - key: AXIOM_API_KEYS
         value: dev-key-axiom
-
-    pythonVersion: 3.11.6
