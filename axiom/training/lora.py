@@ -65,12 +65,14 @@ model.config.pad_token_id = tokenizer.pad_token_id
     examples = load_jsonl(config.dataset_path)
     training_text: List[str] = list(iter_training_text(examples))
 
-    tokenized = tokenizer(
-        training_text,
-        return_tensors="pt",
-        padding=True,
-        truncation=True,
-    )
+  tokenized = tokenizer(
+    training_text,
+    return_tensors="pt",
+    padding="max_length",
+    truncation=True,
+    max_length=512
+)
+
 
     training_args = TrainingArguments(
         output_dir=str(config.output_path),
