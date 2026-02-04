@@ -48,20 +48,10 @@ The web UI sends POST requests to the AXIOM FastAPI backend using the configured
 environment variables for the endpoint URL and API key. The UI relays user
 messages to `/v1/generate` and displays AXIOM responses.
 
-### Security note
-The API URL and API key are exposed to the browser because they are defined as
-`NEXT_PUBLIC_*` variables. Configure these values in the Vercel project settings
-and scope the API key for frontend use only.
-
 ## API (v1)
 ### Start the API
 ```
 uvicorn axiom.api.main:app --host 0.0.0.0 --port 8000
-```
-
-### Running the AXIOM API Locally
-```
-uvicorn axiom.api.main:app --reload
 ```
 
 ### Generate text

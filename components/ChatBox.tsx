@@ -2,7 +2,6 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 
-import { generateResponse } from "../lib/api";
 import MessageBubble from "./MessageBubble";
 
 type ChatMessage = {
@@ -19,6 +18,9 @@ export default function ChatBox() {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
+
+  const apiUrl = process.env.NEXT_PUBLIC_AXIOM_API_URL ?? "";
+  const apiKey = process.env.NEXT_PUBLIC_AXIOM_API_KEY ?? "";
 
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight });
@@ -45,11 +47,40 @@ export default function ChatBox() {
     setLoading(true);
 
     try {
-      const responseText = await generateResponse(trimmed);
+      if (!apiUrl || !apiKey) {
+        throw new Error("Missing API configuration");
+      }
+
+      const response = await fetch(apiUrl, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${apiKey}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ prompt: trimmed, max_tokens: 150 }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Request failed with status ${response.status}`);
+      }
+
+      const data = (await response.json()) as { response?: string };
+      const content =
+        typeof data.response === "string" && data.response.length > 0
+          ? data.response
+          : DEFAULT_ERROR;
+
       const axiomMessage: ChatMessage = {
         id: crypto.randomUUID(),
         role: "axiom",
-        content: responseText || DEFAULT_ERROR,
+        content,
+      };
+      setMessages((prev) => [...prev, axiomMessage]);
+    } catch (error) {
+      const axiomMessage: ChatMessage = {
+        id: crypto.randomUUID(),
+        role: "axiom",
+        content: DEFAULT_ERROR,
       };
       setMessages((prev) => [...prev, axiomMessage]);
     } finally {
