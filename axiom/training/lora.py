@@ -31,8 +31,9 @@ def run_lora_finetune(config: LoRAConfig) -> None:
     )
 
     # FIX GPT-2 PADDING
-    if tokenizer.pad_token is None:
-        tokenizer.pad_token = tokenizer.eos_token
+  if tokenizer.pad_token is None:
+    tokenizer.add_special_tokens({"pad_token": "[PAD]"})
+
 
     # LOAD MODEL (LOCAL ONLY)
     model = AutoModelForCausalLM.from_pretrained(
@@ -40,8 +41,14 @@ def run_lora_finetune(config: LoRAConfig) -> None:
         local_files_only=True
     )
 
+     model.resize_token_embeddings(len(tokenizer))
+model.config.pad_token_id = tokenizer.pad_token_id
+
+
+
     if model.config.pad_token_id is None:
         model.config.pad_token_id = tokenizer.pad_token_id
+
 
     # LoRA CONFIG
     lora_config = LoraConfig(
